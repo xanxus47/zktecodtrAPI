@@ -6,6 +6,7 @@ import {
   EmployeeSchema,
   ErrorSchema,
   IdParamSchema,
+  UserIdParamSchema,
 } from './schemas'
 
 const json = <T>(schema: T, description: string) => ({
@@ -63,15 +64,14 @@ export const listAttendanceRoute = createRoute({
 
 export const getAttendanceRoute = createRoute({
   method: 'get',
-  path: '/attendance/{id}',
+  path: '/attendance/{user_id}',
   tags: ['Attendance'],
-  summary: 'Get attendance record by id',
+  summary: 'Get attendance records by user_id',
   request: {
-    params: IdParamSchema,
+    params: UserIdParamSchema,
   },
   responses: {
-    200: json(AttendanceSchema, 'Attendance record'),
-    404: json(ErrorSchema, 'Attendance record not found'),
+    200: json(z.array(AttendanceSchema), 'Attendance records for the user'),
     500: json(ErrorSchema, 'Server or configuration error'),
     502: json(ErrorSchema, 'Upstream Neon error'),
   },

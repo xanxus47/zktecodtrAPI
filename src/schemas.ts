@@ -16,6 +16,16 @@ export const IdParamSchema = z.object({
     }),
 })
 
+export const UserIdParamSchema = z.object({
+  user_id: z
+    .string()
+    .regex(/^\d+$/)
+    .openapi({
+      param: { name: 'user_id', in: 'path' },
+      example: '1',
+    }),
+})
+
 export const PayTypeSchema = z.enum(['daily_rate', 'record_only'])
 export const ScheduleTypeSchema = z.enum(['regular', 'shift_day', 'shift_night'])
 

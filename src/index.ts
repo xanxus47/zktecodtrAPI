@@ -121,26 +121,21 @@ app.openapi(listAttendanceRoute, async (c) => {
 })
 
 app.openapi(getAttendanceRoute, async (c) => {
-  const { id } = c.req.valid('param')
+  const { user_id } = c.req.valid('param')
   const result = await query<Attendance>(
     c.env,
     `SELECT id, user_id, timestamp
      FROM attendance
-     WHERE id = $1
-     LIMIT 1`,
-    [Number(id)]
+     WHERE user_id = $1
+     ORDER BY timestamp DESC`,
+    [Number(user_id)]
   )
 
   if (!result.ok) {
     return c.json({ error: result.error }, result.status)
   }
 
-  const record = result.data[0]
-  if (!record) {
-    return c.json({ error: 'Attendance record not found' }, 404)
-  }
-
-  return c.json(record, 200)
+  return c.json(result.data, 200)
 })
 
 app.doc('/doc', {
