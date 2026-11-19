@@ -77,11 +77,6 @@ export const AttendanceSchema = z
   .openapi('Attendance')
 
 export const AttendanceListQuerySchema = z.object({
-  user_id: z
-    .string()
-    .regex(/^\d+$/)
-    .optional()
-    .openapi({ param: { name: 'user_id', in: 'query' }, example: '1' }),
   from: z
     .string()
     .optional()

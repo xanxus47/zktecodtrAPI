@@ -83,10 +83,6 @@ app.openapi(listAttendanceRoute, async (c) => {
   const conditions: string[] = []
   const params: unknown[] = []
 
-  if (q.user_id) {
-    params.push(Number(q.user_id))
-    conditions.push(`user_id = $${params.length}`)
-  }
   if (q.from) {
     params.push(q.from)
     conditions.push(`timestamp >= $${params.length}`)
